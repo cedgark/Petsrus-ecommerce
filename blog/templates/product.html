@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<!---->
+
+<div class="card">
+  <a href="{{ url_for('product', product_id=product.id) }}"><img src="{{ url_for('static', filename=product.image_file) }}" style='width:100%';></a>
+  <h1 style='padding:20px'>{{ product.title }}</h1>
+  <p class="priced">{{product.price | currencyformat }}</p>
+  <p id='product_content' style='padding:20px'>{{ product.lcontent }}</p>
+  <button type= 'button' class='space button button2' onclick="location.href='{{url_for('add',loc='product',product_id=product.id,item_name=product.title,skey='wishlist')}}'; ">Add To Wishlist</button>
+  <button type= 'button' class='cart button button3' onclick="location.href='{{url_for('add',loc='product',product_id=product.id,item_name=product.title,skey='cart_item')}}' ">Add to Cart</button>
+<hr>
+</div>
+
+
+<!--product card inspired by https://www.w3schools.com/howto/howto_css_product_card.asp-->
+<div class='product_footer'>
+  <h2 class='grey'>Reviews</h2>
+  </div>
+{% for comment in comments %}
+<div class='card_comment'>
+  <div class='card_comment_content'>
+
+<h3><b>{{ comment.user.username.upper() }}</b></h3> {{comment.date}} <br><br>
+
+<p style='font-size:18px'>{{ comment.content }} &nbsp  </p>
+</div>
+</div>
+{% endfor %}
+
+<form method="POST" action="{{ url_for('product_comment', product_id=product.id) }}">
+
+  {{ form.hidden_tag() }}
+
+<div class="">
+  <div class='product_footer'>
+       <h2>{{ form.comment.label }} </h2>{{ form.comment }} </div>
+       {% for error in form.comment.errors %}
+<div class="alert alert-danger">{{ error }}</div>
+ {% endfor %}
+</div>
+{% if current_user.is_authenticated %}
+<div class="">
+
+      {{ form.submit(class_='button button2') }}
+     </div>
+    {% else %}
+    <br>
+    <button type="button" name="button login comment button" class='button button2' onclick="location.href='{{url_for('login',flag_comment='1')}}' ">Post Comment</button>
+     {% endif %}
+   </form>
+   <br><br>
+{% endblock content %}

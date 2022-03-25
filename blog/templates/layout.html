@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> <!--Bootstrap for flask messages and form styling-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}" />
+
+<title>My Wonderful Site</title>
+</head>
+
+<body onload='nav_change()'>
+  
+  <image src="{{ url_for('static', filename='doggy-banner.png') }}" width="100%" height="600" />
+
+  <div class="banner">
+      <a href="{{url_for('home')}}"><image src="{{ url_for('static', filename='logo.png') }}"  width= "20%"  height="50px" style="min-width:200px; float:left;background-image: url('{{ url_for('static', filename='dogbackground.png') }}');"  /></a>
+
+
+
+<nav>
+
+
+        <div id="header" class="topnav " style="background-color:#35d1f0;">
+
+         <a href="{{ url_for('ship') }}" class="header" style="float:right;"><b> Shipping</b></a>
+          <a href="{{ url_for('invoice') }}" class="header" style="float:right;"><b> E-Invoice</b></a>
+          <a href="{{ url_for('checkout') }}" class="header" style="float:right;"><b> Checkout</b></a>
+
+           <a href="{{ url_for('cart') }}" class="header" style="float:right;"><b>&nbsp Shopping Cart</b></a>
+            <a href="{{ url_for('wishlist') }}" class="header" style="float:right;"><b> Wishlist</b></a>
+
+
+          {% if not(current_user.is_authenticated) %}
+          <a href="{{ url_for('login') }}" class="header" style="float:right;"><b> Login</b></a>
+          <a href="{{ url_for('register') }}" class="header" style="float:right;"><b> Register</b></a>
+          <a href="{{ url_for('about') }}" class="header" style="float:right;"><b>About Us</b></a>
+          <a href="{{ url_for('home') }}" class="header" style="float:right;" ><b>Home</b> </a>
+          <div href="{{ url_for('home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'> &nbsp <b class="header_greet">Hello, Guest!</b>
+
+          {%else%}
+
+          <a href="{{ url_for('logout') }}" class="header" style="float:right;"><b>Logout&nbsp</b></a>
+          <a href="{{ url_for('about') }}" class="header" style="float:right;"><b>About Us</b></a>
+          <a href="{{ url_for('home') }}" class="header" style="float:right;" ><b>Home</b> </a>
+           <div href="{{ url_for('home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'><b class="header_greet">&nbsp Hello, {{current_user.username}}! </b></div>
+
+
+
+          {%endif%}
+
+
+    </div>
+
+      </div>
+
+
+</nav>
+
+
+      <br>
+
+
+
+
+
+<div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+{% for message in messages %}
+<div class="card_flash">
+<div class="alert alert-info">
+{{ message }}
+</div>
+</div>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+</div>
+
+<div id="content">
+{% block content %}
+{% endblock %}
+</div>
+<script>
+
+
+var counter = 0
+
+function nav_change() {
+var url = location.href.split("/");
+var navLinks = document.getElementsByTagName("nav")[0].getElementsByTagName("a");
+
+var i=0;
+var currentPage = url[url.length - 1];
+for(i;i<navLinks.length;i++){
+  var lb = navLinks[i].href.split("/");
+  if(lb[lb.length-1] == currentPage) {
+   navLinks[i].className = "active";
+
+  }
+  }
+}
+
+function total_update() {
+// Make a loop to move through all sub_total class and add to total price
+  total_price = 0
+  var x = document.getElementsByClassName("sub_total");
+  for(var i=0; i<x.length; i++) {
+  var sub_total = document.getElementsByClassName('sub_total')[i].innerHTML
+  var sub_total = parseFloat(sub_total.replace(/[^0-9.-]+/g,""));
+
+  total_price = total_price + sub_total
+}
+
+
+  document.getElementById("total_price").innerHTML = '$' + total_price.toFixed(2);
+
+}
+
+
+function addCart(price) {
+  var sub_total = document.getElementById("sub_total").innerHTML
+  var sub_total = parseFloat(sub_total.replace(/[^0-9.-]+/g,""));
+  sub_total = parseFloat(sub_total) + price
+  sub_total = '$'+ sub_total.toFixed(2)
+  document.getElementById("sub_total").innerHTML = sub_total;
+}
+function subCart(price) {
+  var sub_total = document.getElementById("sub_total").innerHTML
+  var sub_total = parseFloat(sub_total.replace(/[^0-9.-]+/g,""));
+  sub_total = parseFloat(sub_total) - price
+  sub_total = '$'+ sub_total.toFixed(2)
+  document.getElementById("sub_total").innerHTML = sub_total;
+}
+
+function helpbox1(flag=0) {
+document.getElementById("tag1").innerHTML = "Your full name should be provided";
+
+if (flag) {
+document.getElementById("tag1").innerHTML = "";
+}
+
+}
+function helpbox2(flag=0) {
+document.getElementById("tag2").innerHTML = "Provide a valid email address.";
+
+if (flag) {
+document.getElementById("tag2").innerHTML = "";
+}
+
+}
+
+function helpbox3(flag=0) {
+document.getElementById("tag3").innerHTML = "The address to deliver the item(s) to.";
+
+if (flag) {
+document.getElementById("tag3").innerHTML = "";
+}
+
+}
+
+function helpbox4(flag=0) {
+document.getElementById("tag4").innerHTML = "The city to deliver the item(s) to.";
+
+if (flag) {
+document.getElementById("tag4").innerHTML = "";
+}
+
+}
+
+function helpbox5(flag=0) {
+document.getElementById("tag5").innerHTML = "Provide a valid 16 digit card number.";
+
+if (flag) {
+document.getElementById("tag5").innerHTML = "";
+}
+
+}
+
+function helpbox6(flag=0) {
+document.getElementById("tag6").innerHTML = "Provide a 3 digit card security code.";
+
+if (flag) {
+document.getElementById("tag6").innerHTML = "";
+}
+
+}
+
+function helpbox7(flag=0) {
+document.getElementById("tag7").innerHTML = "Provide the 2 digit expiry month.";
+
+if (flag) {
+document.getElementById("tag7").innerHTML = "";
+}
+
+}
+
+function helpbox8(flag=0) {
+document.getElementById("tag8").innerHTML = "Provide the 4 digit expiry year.";
+
+if (flag) {
+document.getElementById("tag8").innerHTML = "";
+}
+
+}
+
+
+
+</script>
+</body>
+</html>

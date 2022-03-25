@@ -1,0 +1,84 @@
+
+
+<!---bootstraped and adapted https://www.api2pdf.com/free-bootstrap-4-packing-slip-html-template/-->
+  {% extends "layout.html" %}
+  {% block content %}
+  <body onload='total_update()'>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <main role="main" class="container" >
+        <div class="row">
+            <div class="col-8">
+                <h1 style='text-align:left'>PetsRus</h1>
+                {% set qr_string = checkout.city + ","+checkout.address + ","+ checkout.full_name %}
+                <img src="{{ qrcode(qr_string) }}">
+                <h5 class="text-left" style="padding-top:10px;">Message from Purchaser</h5>
+                <p class="text-left">
+                    We love doggies! Where there's a dog in need, there's a PetsRus store right around the corner. This purchase is the start of a beautiful relationship with
+                    your doggy!
+                </p>
+            </div>
+            <div class="col-4 border border-dark">
+                <img src="http://www.api2pdf.com/wp-content/uploads/2018/07/download-1.png" />
+                <h4>Order Information</h4>
+                <p class="lead">Order Number: {{checkout.id}}</p>
+                <p>Purchased: {{date}}</p>
+                <p>Shipped: {{date}}</p>
+                <h4>Shipping To</h4>
+                <p>{{checkout.full_name}}</p>
+                <p>{{checkout.address}}</p>
+                <p>{{checkout.city}}</p>
+
+            </div>
+        </div>
+        <hr/>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Totals</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+
+                {% if session['cart_item'][product.title] > 0 %}
+                <tr>
+                  <td scope="row">{{ product.title }}</td>
+                  <td class="text-center" scope="row">{{product.price | currencyformat }}</td>
+                  <td class="text-center" scope="row">{{session['cart_item'][product.title]}}</td>
+                  <td class="text-right" scope="row"> <div class="sub_total">{{ (product.price * session['cart_item'][product.title]) | currencyformat }}</div></td>
+                </tr>
+
+                {% endif %}
+
+              {% endfor %}
+              <td></td>
+
+              <td></td>
+                <td></td>
+                <td class="no-line text-right"><div class='price' id='total_price'>$0</div></td>
+                <input type="button" value="Print this page" onClick="window.print()">
+                <button type= 'button' class='ship' onclick="location.href='{{url_for('invoice')}}' ">Invoice</button>
+
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-faded">
+                    <div class="card-header">
+                        Return Policy
+                    </div>
+                    <div class="card-body">
+                            <p>PetsRus has a 30-days refund policy: customers can buy the product, try it and if they are unsatisfied, they can return it within 30 days. PetsRus will offer either a refund or a replacement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+{% endblock %}

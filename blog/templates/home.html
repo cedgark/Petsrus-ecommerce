@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<body onload='search_arrange()'>
+
+  <form method="POST" action="" style='float:right;'>
+  {{ form.csrf_token }}
+  {{form.search(placeholder="Labrador Retriever")}} {{form.submit(class_='button button6')}} {% for error in form.search.errors %}
+  <div class="alert alert-danger">{{ error }}<br> </div>
+  {% endfor %}
+  </form>
+<div style='margin-left:41px'>
+  <button type= 'button' class= 'button button2 sort' onclick="location.href='{{url_for('home',sort_by='n_ascending')}}'; style='display: inline-block'; ">🔺</button> Name
+<button type= 'button' class= 'button button2 sort' onclick="location.href='{{url_for('home',sort_by='n_descending')}}'; style='display: inline-block'; ">🔻</button> ✣
+<button type= 'button' class= 'button button2 sort' onclick="location.href='{{url_for('home',sort_by='p_ascending')}}'; style='display: inline-block'; ">🔺</button> Price
+<button type= 'button' class= 'button button2 sort' onclick="location.href='{{url_for('home',sort_by='p_descending')}}'; style='display: inline-block'; ">🔻</button>
+</div>
+<br>
+
+<!---->
+
+<!---->
+
+
+{% for product in products %}
+<table class="dog-container" style="background-color:#edf0ee; float:left; margin-left:43px">
+  <tr>
+    <td colspan="2"  ><a href="{{ url_for('product', product_id=product.id) }}"><image src="{{ url_for('static', filename=product.image_file) }}" class='round' width="400" height="250" /></a></td>
+
+  </tr>
+  <tr class='round'>
+    <th colspan="2" class='text-align'><h3><a href="{{ url_for('product', product_id=product.id) }}">{{ product.title }}</a><h3></th>
+  </tr>
+  <tr class='backstretch_lower'>
+    <th class='space price' >{{product.price | currencyformat }}</th>
+
+    <td><button type= 'button'  class='space button button2' onclick="location.href='{{url_for('add',loc='home',product_id='None',item_name=product.title,skey='wishlist')}}'; style='display: inline-block'; ">Add To Wishlist</button>
+      <button type= 'button'  class='space button button3' onclick="location.href='{{url_for('add',loc='home',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block'; ">Add To Cart</button></td>
+  </tr>
+</table>
+
+
+
+
+
+
+{% endfor %}
+
+
+{% endblock content %}

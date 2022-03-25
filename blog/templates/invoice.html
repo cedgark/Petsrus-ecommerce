@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}  <!------ Taken from bootstrap and adapted https://bootsnipp.com/snippets/9gjD ---------->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<body onload="total_update()" >
+<div class="container" >
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h2>Invoice</h2><h3 class="pull-right">Order # {{checkout.id}}</h3>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>Billed To:</strong><br>
+    					Name: {{checkout.full_name}}<br>
+    					Address: {{checkout.address}}
+    				</address>
+    			</div>
+    		</div>
+        <div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>By:</strong><br>
+    					PetsRus Inc.
+    				</address>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    					<strong>Payment Method:</strong><br>
+    					Visa <br> Card Number: {{checkout.card_number}}<br>
+              CVV: {{checkout.cvv}} <br>
+              Expiry Date: {{checkout.expiry_month}} {{checkout.expiry_year}} <br>
+    					{{checkout.email}}
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+            <input type="button" value="Print this page" onClick="window.print()" style='float:right'>
+            <button type= 'button' class='ship' onclick="location.href='{{url_for('ship')}}' " style='float:right'>Shipping</button>
+    				<h3 class="panel-title"><strong>Order summary</strong></h3>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>Item</strong></td>
+        							<td class="text-center"><strong>Price</strong></td>
+        							<td class="text-center"><strong>Quantity</strong></td>
+        							<td class="text-right"><strong>Totals</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+                  {% for product in products %}
+
+                    {% if session['cart_item'][product.title] > 0 %}
+                    <tr>
+      								<td>{{ product.title }}</td>
+      								<td class="text-center">{{product.price | currencyformat }}</td>
+      								<td class="text-center">{{session['cart_item'][product.title]}}</td>
+      								<td class="text-right"> <div class="sub_total">{{ (product.price * session['cart_item'][product.title]) | currencyformat }}</div></td>
+      							</tr>
+
+                    {% endif %}
+
+                  {% endfor %}
+
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>Total Price: </strong></td>
+
+    								<td class="no-line text-right" style='float:right'><div class='price' id='total_price'>$0</div></td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+
+{% endblock %}

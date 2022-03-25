@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<body onLoad="boxfocus()">
+<form method="POST" action="" class='card_form' style='margin-left:380px'>
+{{ form.csrf_token }}
+<div id='tag1' class="alert alert-info"></div>
+<div class="form-group">
+{{form.full_name.label}} <br>{{form.full_name(class_='form-control',placeholder="John Doe",onFocus='helpbox1()',onBlur='helpbox1(flag=1)')}}
+<br></div>
+<div id='tag2' class="alert alert-info"></div>
+<div class="form-group">
+{{form.email.label}}<br> {{form.email(class_='form-control',placeholder="example@gmail.com",onFocus='helpbox2()',onBlur='helpbox2(flag=1)')}}
+<br></div>
+{% for error in form.email.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div id='tag3' class="alert alert-info"></div>
+<div class="form-group">
+{{form.address.label}} <br>{{form.address(class_='form-control',placeholder="606 Delaware Street De Pere, WI 54115",onFocus='helpbox3()',onBlur='helpbox3(flag=1)')}}
+<br></div>
+<div id='tag4' class="alert alert-info"></div>
+<div class="form-group">
+{{form.city.label}}<br> {{form.city(class_='form-control',placeholder="New York",onFocus='helpbox4()',onBlur='helpbox2(flag=4)')}}
+<br></div>
+<div id='tag5' class="alert alert-info"></div>
+<div class="form-group">
+{{form.card_number.label}} <br>{{form.card_number(class_='form-control',placeholder="1212 1212 1212 1212",onFocus='helpbox5()',onBlur='helpbox5(flag=1)')}}
+<br></div>
+{% for error in form.card_number.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div id='tag6' class="alert alert-info"></div>
+<div class="form-group">
+{{form.cvv.label}} <br>{{form.cvv(class_='form-control',placeholder="343",onFocus='helpbox6()',onBlur='helpbox6(flag=1)')}}
+<br></div>
+{% for error in form.cvv.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div id='tag7' class="alert alert-info"></div>
+<div class="form-group">
+{{form.expiry_month.label}} <br>{{form.expiry_month(class_='form-control',placeholder="04",onFocus='helpbox7()',onBlur='helpbox7(flag=1)')}}
+<br></div>
+{% for error in form.expiry_month.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div id='tag8' class="alert alert-info"></div>
+<div class="form-group">
+{{form.expiry_year.label}} <br>{{form.expiry_year(class_='form-control',placeholder="2023",onFocus='helpbox8()',onBlur='helpbox8(flag=1)')}}
+<br></div>
+{% for error in form.expiry_year.errors %}
+<div class="alert alert-danger" class="alert alert-info">{{ error }} <br>
+</div>{% endfor %}
+<input type="submit" class='button button2' value="Checkout">
+</form>
+<br><br>
+{% endblock content %}

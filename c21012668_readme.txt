@@ -1,0 +1,10 @@
+C21012668
+Chiwuike Anyiam-Osigwe
+anyiam-osigweCE@cardiff.ac.uk
+Commit SHA-85a1e98d90a697a776477357cd03aed88738563d
+Bootstrap used for invoice- https://bootsnipp.com/snippets/9gjD
+Bootstrap used for shipping labels-https://www.api2pdf.com/free-bootstrap-4-packing-slip-html-template/
+Bootstrap used for flash colouring of messages and form styling-https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_alerts&stacked=h
+Product card design inspired by-https://www.w3schools.com/howto/howto_css_product_card.asp
+
+Exceptional attention to design has been made- Navbar responsive and beautifying features

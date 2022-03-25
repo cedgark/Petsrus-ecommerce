@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!---->
+{%set counter = namespace(header=0)%}
+{%for product in products%}
+{% if session['wishlist'][product.title] > 0 %}
+{% set counter.header = counter.header  + 1 %}
+
+{%endif%}
+{%endfor%}
+
+{% if counter.header  > 0 %}
+
+<table class='cart text-align'>
+<tbody>
+<tr>
+<th class='text-align wrapper'></th>
+<th></th>
+<th class='text-align wrapper'>Name</th>
+<th></th>
+<th class='text-align wrapper'>Description</th>
+<th></th>
+<th class='text-align wrapper'>Price</th>
+<th></th>
+<th class='text-align wrapper'></th>
+<th></th>
+<th>&nbsp;</th>
+</tr>
+{% endif %}
+
+{% for product in products %}
+
+  {% if session['wishlist'][product.title] > 0 %}
+  <table class='cart text-align'>
+  <tbody>
+  <tr>
+  <td class='wrapper'><a href="{{ url_for('product', product_id=product.id) }}"><image src="{{ url_for('static', filename=product.image_file) }}" class='round' width="200" height="125"/></a></td>
+  <td></td>
+  <td class='wrapper text-align'><h4><a href="{{ url_for('product', product_id=product.id) }}">{{ product.title }}</a><h4></td>
+    <td></td>
+  <td class='wrapper'><h5>{{ product.scontent }}<h5></td>
+  <td></td>
+<td class='wrapper space price' id='price_wished'> <div class="sub_total">{{ product.price | currencyformat }}</div></td>
+
+  <td></td>
+    <td class='wrapper'>  <button type= 'button' class='cart button button3' onclick="location.href='{{url_for('add',loc='wishlist',product_id='None',item_name=product.title,skey='cart_item')}}'; ">Add to cart</button></td>
+  <td></td>
+  <td class='wrapper'><a href="{{url_for('clear',loc='wishlist',product_id='None',item_name=product.title,skey='wishlist')}}">❌</a></td>
+
+  <td></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>&nbsp;</td>
+  </tr>
+  </table>
+  <hr>
+  {% endif %}
+
+{% endfor %}
+
+
+
+
+{%if counter.header  > 0%}
+<table class='footer cart text-align'>
+<tr>
+
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'><div class= 'price' id='tpricelabel'></div></td>
+<td></td>
+<td class='wrapper'><div class='price' id='total_price'></div></td>
+<td></td>
+<td class='wrapper'><button type= 'button' class='button checkout button4' onclick="location.href='{{url_for('cart')}}'; ">Shopping Cart</button></td>
+{% else %}
+
+<h2 style='display:inline-block'>Wishlist Empty</h2> <td class='wrapper'><button type= 'button' class='button checkout button4' onclick="location.href='{{url_for('cart')}}'; ">Shopping Cart</button></td>
+  {% endif %}
+
+</tr>
+</table>
+
+
+{% endblock content %}

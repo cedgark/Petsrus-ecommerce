@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+<form method="POST" action="" class='card_form'>
+{{ form.csrf_token }}
+<div class="form-group">
+{{ form.username.label }} <br>{{ form.username(class_="form-control",placeholder='Coco') }}</div><br>
+{% for error in form.username.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div class="form-group">
+{{ form.first_name.label }}<br> {{ form.first_name(class_="form-control",placeholder='John') }} </div><br>
+<div class="form-group">
+{{ form.last_name.label }}<br> {{ form.last_name(class_="form-control",placeholder='Doe') }}</div> <br>
+<div class="form-group">
+{{ form.email.label }}<br> {{ form.email(class_="form-control",placeholder='example@gmail.com') }} </div><br>
+{% for error in form.email.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div class="form-group">
+{{ form.password.label }} <br>{{ form.password(class_="form-control") }} </div><br>
+{% for error in form.password.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<div class="form-group">
+{{ form.confirm_password.label }}<br> {{ form.confirm_password(class_="form-control") }} </div><br>
+{% for error in form.confirm_password.errors %}
+<div class="alert alert-danger">{{ error }} <br>
+</div>{% endfor %}
+<input type="submit" class= 'button button2' value="Register"> </form>
+<form>
+<br><br>
+{% endblock content %}

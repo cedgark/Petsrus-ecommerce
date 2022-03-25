@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+{% block content %}
+<!---->
+
+<body onload="total_update()">
+<!---->
+{%set counter = namespace(header=0)%}
+{%for product in products%}
+{% if session['cart_item'][product.title] > 0 %}
+{% set counter.header = counter.header  + 1 %}
+
+{%endif%}
+{%endfor%}
+
+{% if counter.header  > 0 %}
+<table class='cart text-align'>
+<tbody>
+<tr>
+<th class='text-align wrapper'></th>
+<th></th>
+<th class='text-align wrapper'>Name</th>
+<th></th>
+<th class='text-align wrapper'>Description</th>
+<th></th>
+<th class='text-align wrapper'>Price</th>
+<th></th>
+<th class='text-align wrapper'></th>
+<th></th>
+<th>&nbsp;</th>
+</tr>
+{% endif %}
+{% for product in products %}
+
+  {% if session['cart_item'][product.title] > 0 %}
+  <table class='cart text-align'>
+  <tbody>
+  <tr>
+  <td class='wrapper'><a href="{{ url_for('product', product_id=product.id) }}"><image src="{{ url_for('static', filename=product.image_file) }}" class='round' width="200" height="125"/></a></td>
+  <td></td>
+  <td class='wrapper text-align'><h4><a href="{{ url_for('product', product_id=product.id) }}">{{ product.title }}</a><h4></td>
+    <td></td>
+  <td class='wrapper'><h5>{{ product.scontent }}<h5></td>
+  <td></td>
+
+  <td class='wrapper'><button type= 'button' class='cart button button3' onclick="location.href='{{url_for('subtract',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block' ">-</button>&nbsp<div id='qty' style='display: inline-block'>{{session['cart_item'][product.title]}}</div>&nbsp<button type= 'button' class='cart button button2' onclick="location.href='{{url_for('add',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block'; ">+</button></td>
+  <td></td>
+  <td class='wrapper space price'> <div class="sub_total" id='price_wished'>{{ (product.price * session['cart_item'][product.title]) | currencyformat }}</div></td>
+  <td></td>
+  <td class='wrapper'><a href="{{url_for('clear',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}">❌</a></td>
+
+  <td></td>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td>&nbsp;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>&nbsp;</td>
+  </tr>
+  </table>
+  <hr>
+  {% endif %}
+
+{% endfor %}
+
+{%if counter.header  > 0%}
+<table class='footer cart text-align'>
+<tr>
+
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'>&nbsp;</td>
+<td></td>
+<td class='wrapper'><div class= 'price' id='tpricelabel'>Total Price: </div></td>
+<td></td>
+<td class='wrapper'><div class='price' id='total_price'>$0</div></td>
+<td></td>
+<td class='wrapper'><button type= 'button' class='button checkout button5' onclick="location.href='{{url_for('checkout')}}'; ">Checkout</button></td>
+{% else %}
+<h2 style='display:inline-block'>Shopping Cart Empty</h2> <button type= 'button' class='button checkout button4' onclick="location.href='{{url_for('home')}}'; ">Home</button>
+  {% endif %}
+</tr>
+
+</table>
+
+
+
+
+
+{% endblock content %}
