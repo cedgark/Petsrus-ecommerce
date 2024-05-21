@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_qrcode import QRcode
 
 
+
 app = Flask(__name__)
 
 
@@ -54,5 +55,9 @@ admin.add_view(AdminView(Checkout, db.session))
 
 from waitress import serve
 
+@app.route("/", methods=['GET', 'POST'])
+def home():
+    return "<p>Hello</p>"
+    
 if __name__ == "__main__":
     app.run(debug=True)
