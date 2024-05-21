@@ -7,15 +7,16 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}" />
 
-<title>My Wonderful Site</title>
+<title>PetsRus</title>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 </head>
 
 <body onload='nav_change()'>
-  
+
   <image src="{{ url_for('static', filename='doggy-banner.png') }}" width="100%" height="600" />
 
   <div class="banner">
-      <a href="{{url_for('home')}}"><image src="{{ url_for('static', filename='logo.png') }}"  width= "20%"  height="50px" style="min-width:200px; float:left;background-image: url('{{ url_for('static', filename='dogbackground.png') }}');"  /></a>
+      <a href="{{url_for('routes.home')}}"><image src="{{ url_for('static', filename='logo.png') }}"  width= "20%"  height="50px" style="min-width:200px; float:left;background-image: url('{{ url_for('static', filename='dogbackground.png') }}');"  /></a>
 
 
 
@@ -24,27 +25,27 @@
 
         <div id="header" class="topnav " style="background-color:#35d1f0;">
 
-         <a href="{{ url_for('ship') }}" class="header" style="float:right;"><b> Shipping</b></a>
-          <a href="{{ url_for('invoice') }}" class="header" style="float:right;"><b> E-Invoice</b></a>
-          <a href="{{ url_for('checkout') }}" class="header" style="float:right;"><b> Checkout</b></a>
+         <a href="{{ url_for('routes.ship') }}" class="header" style="float:right;"><b> Shipping</b></a>
+          <a href="{{ url_for('routes.invoice') }}" class="header" style="float:right;"><b> E-Invoice</b></a>
+          <a href="{{ url_for('routes.checkout') }}" class="header" style="float:right;"><b> Checkout</b></a>
 
-           <a href="{{ url_for('cart') }}" class="header" style="float:right;"><b>&nbsp Shopping Cart</b></a>
-            <a href="{{ url_for('wishlist') }}" class="header" style="float:right;"><b> Wishlist</b></a>
+           <a href="{{ url_for('routes.cart') }}" class="header" style="float:right;"><b>&nbsp Shopping Cart</b></a>
+            <a href="{{ url_for('routes.wishlist') }}" class="header" style="float:right;"><b> Wishlist</b></a>
 
 
           {% if not(current_user.is_authenticated) %}
-          <a href="{{ url_for('login') }}" class="header" style="float:right;"><b> Login</b></a>
-          <a href="{{ url_for('register') }}" class="header" style="float:right;"><b> Register</b></a>
-          <a href="{{ url_for('about') }}" class="header" style="float:right;"><b>About Us</b></a>
-          <a href="{{ url_for('home') }}" class="header" style="float:right;" ><b>Home</b> </a>
-          <div href="{{ url_for('home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'> &nbsp <b class="header_greet">Hello, Guest!</b>
+          <a href="{{ url_for('routes.login') }}" class="header" style="float:right;"><b> Login</b></a>
+          <a href="{{ url_for('routes.register') }}" class="header" style="float:right;"><b> Register</b></a>
+          <a href="{{ url_for('routes.about') }}" class="header" style="float:right;"><b>About Us</b></a>
+          <a href="{{ url_for('routes.home') }}" class="header" style="float:right;" ><b>Home</b> </a>
+          <div href="{{ url_for('routes.home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'> &nbsp <b class="header_greet">Hello, Guest!</b>
 
           {%else%}
 
-          <a href="{{ url_for('logout') }}" class="header" style="float:right;"><b>Logout&nbsp</b></a>
-          <a href="{{ url_for('about') }}" class="header" style="float:right;"><b>About Us</b></a>
-          <a href="{{ url_for('home') }}" class="header" style="float:right;" ><b>Home</b> </a>
-           <div href="{{ url_for('home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'><b class="header_greet">&nbsp Hello, {{current_user.username}}! </b></div>
+          <a href="{{ url_for('routes.logout') }}" class="header" style="float:right;"><b>Logout&nbsp</b></a>
+          <a href="{{ url_for('routes.about') }}" class="header" style="float:right;"><b>About Us</b></a>
+          <a href="{{ url_for('routes.home') }}" class="header" style="float:right;" ><b>Home</b> </a>
+           <div href="{{ url_for('routes.home') }}" style="float:right; padding-top:15px; position:absolute;" class='header'><b class="header_greet">&nbsp Hello, {{current_user.username}}! </b></div>
 
 
 

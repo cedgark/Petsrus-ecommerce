@@ -1,10 +1,21 @@
 from datetime import datetime
-from blog import db
-from blog import login_manager
+from flask import current_app as app
+# from app import app
+#from app import db
+# from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+# from app import login_manager
+from store import store
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
+# db.metadata.clear()
+app = store.app
+db = store.db
+login_manager = store.login_manager
+
 class Post(db.Model):
+  __table_args__ = {'keep_existing': True}
   id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
   title = db.Column(db.Text, nullable=False)
@@ -17,6 +28,7 @@ class Post(db.Model):
 
 ###
 class Product(db.Model):
+  __table_args__ = {'keep_existing': True}
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.String(64))
   scontent = db.Column(db.Text,nullable=True) #short and long descriptions
@@ -26,6 +38,7 @@ class Product(db.Model):
 
 
 class User(UserMixin, db.Model):
+    __table_args__ = {'keep_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)
     first_name = db.Column(db.String(15), unique=True, nullable=False, default='Joe')
@@ -36,7 +49,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(60), nullable=False)
     comment=db.relationship('Comment',backref='user',lazy=True)
     post = db.relationship('Post', backref='user', lazy=True)
-    checkout = db.relationship('Checkout', backref='user', lazy=True)
+    #checkout = db.relationship('Checkout', backref='user', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
@@ -57,6 +70,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class Comment(db.Model):
+  __table_args__ = {'keep_existing': True}
   id = db.Column(db.Integer,primary_key=True)
   date = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
   content = db.Column(db.Text,nullable=False)
@@ -70,9 +84,10 @@ class Comment(db.Model):
 
 
 class Checkout(db.Model):
+  __table_args__ = {'keep_existing': True}
   id = db.Column(db.Integer, primary_key=True)
   full_name = db.Column(db.Text)
-  email = db.Column(db.String(120),db.ForeignKey('user.id'))
+  email = db.Column(db.String(120)) #email = db.Column(db.String(120),db.ForeignKey('user.id'))
   address = db.Column(db.Text) #checkout.cvv checkout.expiry_month checkout.expiry_year
   city =  db.Column(db.Text)
   card_number = db.Column(db.Text)

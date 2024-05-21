@@ -4,6 +4,6 @@
 Welcome to the admin panel {{ current_user.username }}!
 {% else %}
 Hello, please login as an admin before accessing this panel &nbsp|
-<a href="{{ url_for('login') }}">Login &nbsp;</a>
+<a href="{{ url_for('routes.login') }}">Login &nbsp;</a>
 {% endif %}
 {% endblock %}

@@ -48,7 +48,7 @@
     		<div class="panel panel-default">
     			<div class="panel-heading">
             <input type="button" value="Print this page" onClick="window.print()" style='float:right'>
-            <button type= 'button' class='ship' onclick="location.href='{{url_for('ship')}}' " style='float:right'>Shipping</button>
+            <button type= 'button' class='ship' onclick="location.href='{{url_for('routes.ship')}}' " style='float:right'>Shipping</button>
     				<h3 class="panel-title"><strong>Order summary</strong></h3>
     			</div>
     			<div class="panel-body">
@@ -83,7 +83,7 @@
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Total Price: </strong></td>
 
-    								<td class="no-line text-right" style='float:right'><div class='price' id='total_price'>$0</div></td>
+    								<td class="no-line text-right" style='float:right'><div class='price' id='total_price'>{{total_price | currencyformat}}</div></td>
     							</tr>
     						</tbody>
     					</table>

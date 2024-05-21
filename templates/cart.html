@@ -35,18 +35,18 @@
   <table class='cart text-align'>
   <tbody>
   <tr>
-  <td class='wrapper'><a href="{{ url_for('product', product_id=product.id) }}"><image src="{{ url_for('static', filename=product.image_file) }}" class='round' width="200" height="125"/></a></td>
+  <td class='wrapper'><a href="{{ url_for('routes.product', product_id=product.id) }}"><image src="{{ url_for('static', filename=product.image_file) }}" class='round' width="200" height="125"/></a></td>
   <td></td>
-  <td class='wrapper text-align'><h4><a href="{{ url_for('product', product_id=product.id) }}">{{ product.title }}</a><h4></td>
+  <td class='wrapper text-align'><h4><a href="{{ url_for('routes.product', product_id=product.id) }}">{{ product.title }}</a><h4></td>
     <td></td>
   <td class='wrapper'><h5>{{ product.scontent }}<h5></td>
   <td></td>
 
-  <td class='wrapper'><button type= 'button' class='cart button button3' onclick="location.href='{{url_for('subtract',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block' ">-</button>&nbsp<div id='qty' style='display: inline-block'>{{session['cart_item'][product.title]}}</div>&nbsp<button type= 'button' class='cart button button2' onclick="location.href='{{url_for('add',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block'; ">+</button></td>
+  <td class='wrapper'><button type= 'button' class='cart button button3' onclick="location.href='{{url_for('routes.subtract',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block' ">-</button>&nbsp<div id='qty' style='display: inline-block'>{{session['cart_item'][product.title]}}</div>&nbsp<button type= 'button' class='cart button button2' onclick="location.href='{{url_for('routes.add',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}'; style='display: inline-block'; ">+</button></td>
   <td></td>
   <td class='wrapper space price'> <div class="sub_total" id='price_wished'>{{ (product.price * session['cart_item'][product.title]) | currencyformat }}</div></td>
   <td></td>
-  <td class='wrapper'><a href="{{url_for('clear',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}">❌</a></td>
+  <td class='wrapper'><a href="{{url_for('routes.clear',loc='cart',product_id='None',item_name=product.title,skey='cart_item')}}">❌</a></td>
 
   <td></td>
   </tr>
@@ -81,11 +81,11 @@
 <td></td>
 <td class='wrapper'><div class= 'price' id='tpricelabel'>Total Price: </div></td>
 <td></td>
-<td class='wrapper'><div class='price' id='total_price'>$0</div></td>
+<td class='wrapper'><div class='price' id='total_price'>{{total_price | currencyformat}}</div></td>
 <td></td>
-<td class='wrapper'><button type= 'button' class='button checkout button5' onclick="location.href='{{url_for('checkout')}}'; ">Checkout</button></td>
+<td class='wrapper'><button type= 'button' class='button checkout button5' onclick="location.href='{{url_for('routes.checkout')}}'; ">Checkout</button></td>
 {% else %}
-<h2 style='display:inline-block'>Shopping Cart Empty</h2> <button type= 'button' class='button checkout button4' onclick="location.href='{{url_for('home')}}'; ">Home</button>
+<h2 style='display:inline-block'>Shopping Cart Empty</h2> <button type= 'button' class='button checkout button4' onclick="location.href='{{url_for('routes.home')}}'; ">Home</button>
   {% endif %}
 </tr>
 

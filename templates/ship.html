@@ -58,9 +58,9 @@
 
               <td></td>
                 <td></td>
-                <td class="no-line text-right"><div class='price' id='total_price'>$0</div></td>
+                <td class="no-line text-right"><div class='price' id='total_price'>{{total_price | currencyformat}}</div></td>
                 <input type="button" value="Print this page" onClick="window.print()">
-                <button type= 'button' class='ship' onclick="location.href='{{url_for('invoice')}}' ">Invoice</button>
+                <button type= 'button' class='ship' onclick="location.href='{{url_for('routes.invoice')}}' ">Invoice</button>
 
             </tbody>
         </table>

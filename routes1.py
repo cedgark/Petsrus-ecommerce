@@ -112,7 +112,7 @@ def clear(loc,item_name,product_id=None,skey=None):
         flash('You must login to do this.')
         return redirect(url_for('login'))
     if not(session[skey][item_name] == 0):
-        if skey in session:
+        if skey in session: #'cart_item'
             session[skey][item_name] = 0
             session.modified = True
         else:

@@ -1,6 +1,6 @@
 from flask_admin.contrib.sqla import ModelView
 import flask_login as login
-from blog.models import User
+from models import User
 
 class AdminView(ModelView):
     def is_accessible(self):
