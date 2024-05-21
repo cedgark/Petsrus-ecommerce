@@ -1,11 +1,15 @@
 {
     "builds": [
         {
-            "src": "app.py",
+            "src": "*.py",
             "use": "@vercel/python"
         },
         {
             "src": "static/**",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "templates/**",
             "use": "@vercel/static"
         }
     ],
