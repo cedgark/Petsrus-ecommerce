@@ -19,42 +19,6 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-# store these flask objects
-
-from store import store
-
-#store_app(app)
-
-store.store_app(app)
-
-store.store_db(db)
-
-store.store_login_manager(login_manager)
-
-#store_app(login_manager)
-
-# from blog import routes
-from routes import routes
-
-app.register_blueprint(routes, url_prefix="") # a blueprint of the routes is created
-
-@app.template_filter() ## importing the template filter for currency format
-def currencyformat(value):
-    value = float(value)
-    return "${:,.2f}".format(value)
-
-from flask_admin import Admin
-from views import AdminView
-from models import User, Post, Comment, Checkout, Product
-admin = Admin(app, name='Admin panel', template_mode='bootstrap3')
-admin.add_view(AdminView(User, db.session))
-admin.add_view(AdminView(Post, db.session))
-admin.add_view(AdminView(Comment, db.session))
-admin.add_view(AdminView(Product, db.session))
-admin.add_view(AdminView(Checkout, db.session))
-
-from waitress import serve
-
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return "<p>Hello</p>"
