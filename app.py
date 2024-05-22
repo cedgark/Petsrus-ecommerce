@@ -6,9 +6,6 @@ from flask_qrcode import QRcode
 
 
 app = Flask(__name__)
-@app.route("/", methods=['GET', 'POST']) ## importing the template filter for currency format
-def homee():
-    return '<p>Homeeeuu</p>'
 
 QRcode(app)
 app.config['SECRET_KEY'] = '76655bf80f7900ae3929c8696951a90c6378b658b9258c2d'
