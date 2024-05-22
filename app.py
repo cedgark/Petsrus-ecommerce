@@ -6,7 +6,7 @@ from flask_qrcode import QRcode
 
 
 app = Flask(__name__)
-@app.route("/") ## importing the template filter for currency format
+@app.route("/", methods=['GET', 'POST']) ## importing the template filter for currency format
 def homee():
     return '<>Homeeeuu</p>'
 
